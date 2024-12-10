@@ -37,7 +37,7 @@ jobs:
       - name: Sync files to hosting
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          local-dir: ./build
+          local-dir: ./build/
           server: midiquest.eu
           username: github_actions.midiquest.eu
           password: ${{ secrets.FTP_PASSWORD }}
