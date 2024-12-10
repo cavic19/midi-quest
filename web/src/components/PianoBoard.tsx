@@ -9,10 +9,10 @@ type PianoBoardProps = {
 } & HasClassname
 
 function PianoBoard({ onTilesChange, className }: PianoBoardProps) {
-    const whiteTileWidth = 90;
-    const whiteTileHeight = 340;
-    const blackTileWidth = 46;
-    const blackTileHeight = 174;
+    const whiteTileWidth = 100;
+    const whiteTileHeight = 400;
+    const blackTileWidth = 50  ;
+    const blackTileHeight = 200;
     const gap = 16;
 
     const [pressedTiles, setPressedTiles] = useState<Note[]>([]);
@@ -44,11 +44,11 @@ function PianoBoard({ onTilesChange, className }: PianoBoardProps) {
 
     return (
         <div className={classNames("flex relative w-fit h-fit", className)} style={{ gap: gap }}>
-            <div className={classNames("bg-black rounded-xl absolute z-0 drop-shadow-md", { "bg-my-blue-400": pressedTiles.includes("C#") })} style={{ width: blackTileWidth, height: blackTileHeight, left: blackTilePosition(1) }} />
-            <div className={classNames("bg-black rounded-xl absolute z-0 drop-shadow-md", { "bg-my-blue-400": pressedTiles.includes("D#") })} style={{ width: blackTileWidth, height: blackTileHeight, left: blackTilePosition(2) }} />
-            <div className={classNames("bg-black rounded-xl absolute z-0 drop-shadow-md", { "bg-my-blue-400": pressedTiles.includes("F#") })} style={{ width: blackTileWidth, height: blackTileHeight, left: blackTilePosition(4) }} />
-            <div className={classNames("bg-black rounded-xl absolute z-0 drop-shadow-md", { "bg-my-blue-400": pressedTiles.includes("G#") })} style={{ width: blackTileWidth, height: blackTileHeight, left: blackTilePosition(5) }} />
-            <div className={classNames("bg-black rounded-xl absolute z-0 drop-shadow-md", { "bg-my-blue-400": pressedTiles.includes("A#") })} style={{ width: blackTileWidth, height: blackTileHeight, left: blackTilePosition(6) }} />
+            <div className={classNames("bg-black rounded-xl absolute -top-2 drop-shadow-md", { "bg-my-blue-400": pressedTiles.includes("C#") })} style={{ width: blackTileWidth, height: blackTileHeight, left: blackTilePosition(1) }} />
+            <div className={classNames("bg-black rounded-xl absolute -top-2 drop-shadow-md", { "bg-my-blue-400": pressedTiles.includes("D#") })} style={{ width: blackTileWidth, height: blackTileHeight, left: blackTilePosition(2) }} />
+            <div className={classNames("bg-black rounded-xl absolute -top-2 drop-shadow-md", { "bg-my-blue-400": pressedTiles.includes("F#") })} style={{ width: blackTileWidth, height: blackTileHeight, left: blackTilePosition(4) }} />
+            <div className={classNames("bg-black rounded-xl absolute -top-2 drop-shadow-md", { "bg-my-blue-400": pressedTiles.includes("G#") })} style={{ width: blackTileWidth, height: blackTileHeight, left: blackTilePosition(5) }} />
+            <div className={classNames("bg-black rounded-xl absolute -top-2 drop-shadow-md", { "bg-my-blue-400": pressedTiles.includes("A#") })} style={{ width: blackTileWidth, height: blackTileHeight, left: blackTilePosition(6) }} />
 
             <div className={classNames("rounded-xl", { "bg-my-blue-100": pressedTiles.includes("C"), "bg-white": !pressedTiles.includes("C") })} style={{ width: whiteTileWidth, height: whiteTileHeight }} />
             <div className={classNames("rounded-xl", { "bg-my-blue-100": pressedTiles.includes("D"), "bg-white": !pressedTiles.includes("D") })} style={{ width: whiteTileWidth, height: whiteTileHeight }} />
