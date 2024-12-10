@@ -36,6 +36,8 @@ jobs:
         with:
           name: build
           path: build
+      - name: See what I download
+        run: ls -a
       - name: Sync files to hosting
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
