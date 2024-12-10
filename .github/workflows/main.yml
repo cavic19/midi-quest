@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@main
+      - name: Go to web directory
+        run: cd web
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Build bundle
