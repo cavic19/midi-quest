@@ -40,7 +40,7 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
           server: webftp.midiquest.eu
-          username: github_actions.midquest.eu
+          username: github_actions.midiquest.eu
           password: ${{secrets.FTP_PASSWORD}}
           
           
