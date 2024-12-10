@@ -18,20 +18,20 @@ function App() {
   const maxTime = generateTime(score);
   const [gameStarted, setGameStarted] = useState(false);
   const [iseGameOver, setIsGameOver] = useState(false);
-  const { timeLeft, restart, stop } = useTimer(maxTime);
+  const { timeLeft, restart: restartTimer, stop: stopTimer } = useTimer(maxTime);
 
   useEffect(() => {
     if (gameStarted) {
       setScore(0);
-      restart();
+      restartTimer();
     } else {
-      stop();
+      stopTimer();
     }
   }, [gameStarted])
 
   useEffect(() => {
     if (timeLeft == 0) {
-      restart();
+      restartTimer();
       setLives(ls => ls - 1);
       setNote(randomItem([...NOTES]))
     }
@@ -50,6 +50,7 @@ function App() {
       if (tiles.length == 1 && tiles[0] == note) {
         setNote(randomItem([...NOTES]));
         setScore(sc => sc + 1);
+        restartTimer();
       } else if (tiles.length == 0) {
         // DO nothing
       } else {
