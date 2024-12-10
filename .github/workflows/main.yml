@@ -38,11 +38,7 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           local-dir: ./build
-          server: webftp.midiquest.eu
-          protocol: ftps
+          server: midiquest.eu
           username: github_actions.midiquest.eu
-          password: ${{secrets.FTP_PASSWORD}}
-          
-          
-      
+          password: ${{ secrets.FTP_PASSWORD }}
         
