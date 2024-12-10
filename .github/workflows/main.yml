@@ -16,6 +16,8 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Build bundle
         working-directory: ./web
+        env:
+          CI: false
         run: yarn build
       - name: Archive production artifact
         uses: actions/upload-artifact@main
