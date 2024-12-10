@@ -25,7 +25,6 @@ function useMidiPiano(onNoteOn?: (note: Note) => void, onNoteOf?: (note: Note) =
         Array.from(midiAccess.inputs.values()).forEach(input => {
             input.onmidimessage = ({ data }) => {
                 const [command, note] = Array.from(data)
-                console.log(command, note)
                 if (command == MIDI_NOTE_ON) {
                     onNoteOn?.(NOTES[note % NOTES.length])
 
