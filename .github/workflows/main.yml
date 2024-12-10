@@ -11,17 +11,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@main
-      - name: Go to web directory
-        run: cd web
       - name: Install dependencies
+        working-directory: ./web
         run: yarn install --frozen-lockfile
       - name: Build bundle
+        working-directory: ./web
         run: yarn build
       - name: Archive production artifact
         uses: actions/upload-artifact@main
         with:
           name: build
-          path: build
+          path: web/build
   deploy:
     name: Deploy 🚀
     needs: build
