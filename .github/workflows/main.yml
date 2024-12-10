@@ -18,6 +18,7 @@ jobs:
         working-directory: ./web
         env:
           CI: false
+          GENERATE_SOURCEMAP: false
         run: yarn build
       - name: Archive production artifact
         uses: actions/upload-artifact@main
