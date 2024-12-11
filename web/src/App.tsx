@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import { Note, NOTES } from "./types/Note";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Note } from "./models/Note";
 import { MAX_HEALTH } from "./config";
 import HealthBar from "./components/HealthBar";
 import useTimer from "./hooks/useTimer";
@@ -8,13 +8,14 @@ import PianoBoard from "./components/PianoBoard";
 import NewGameScreen from "./components/NewGameScreen";
 import GameOverScreen from "./components/GameOverScreen";
 import generateTime from "./generateTime";
-import randomItem from "./utils/randomItem";
+import NoteGenerator from "./models/NoteGenerator";
 
 
 function App() {
+  const {current: noteGenerator} = useRef(new NoteGenerator());
   const [lives, setLives] = useState(MAX_HEALTH);
   const [score, setScore] = useState(0);
-  const [note, setNote] = useState(randomItem([...NOTES]));
+  const [note, setNote] = useState(() => noteGenerator.next());
   const maxTime = generateTime(score);
   const [gameStarted, setGameStarted] = useState(false);
   const [iseGameOver, setIsGameOver] = useState(false);
@@ -33,7 +34,7 @@ function App() {
     if (timeLeft == 0) {
       restartTimer();
       setLives(ls => ls - 1);
-      setNote(randomItem([...NOTES]))
+      setNote(noteGenerator.next())
     }
   }, [timeLeft]);
 
@@ -48,7 +49,7 @@ function App() {
   const handleTilesChange = useCallback((tiles: Note[]) => {
     if (gameStarted) {
       if (tiles.length == 1 && tiles[0] == note) {
-        setNote(randomItem([...NOTES]));
+        setNote(noteGenerator.next());
         setScore(sc => sc + 1);
         restartTimer();
       } else if (tiles.length == 0) {
@@ -96,6 +97,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;

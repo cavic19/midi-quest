@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import useMidiPiano from "../hooks/useMidiPiano";
 import { useCallback, useEffect, useState } from "react";
-import { Note } from "../types/Note";
+import { Note } from "../models/Note";
 import HasClassname from "../types/HasClassname";
 
 type PianoBoardProps = {

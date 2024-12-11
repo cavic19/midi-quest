@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Note, NOTES } from "../types/Note";
+import { Note, NOTES } from "../models/Note";
 
 const MIDI_NOTE_ON = 144
 const MIDI_NOTE_OFF = 128
