@@ -12,7 +12,7 @@ import NoteGenerator from "./models/NoteGenerator";
 
 
 function App() {
-  const {current: noteGenerator} = useRef(new NoteGenerator());
+  const { current: noteGenerator } = useRef(new NoteGenerator());
   const [lives, setLives] = useState(MAX_HEALTH);
   const [score, setScore] = useState(0);
   const [note, setNote] = useState(() => noteGenerator.next());
@@ -66,7 +66,7 @@ function App() {
   return (
     // This should be in body...
     <div className='w-screen h-screen bg-gradient-to-b from-midnight-green to-my-cyan-600'>
-      <div className="h-screen flex flex-col w-fit max-w-[1200px] mx-auto">
+      <div className="h-screen flex flex-col w-fit maxx-w-[1200px] mx-auto">
         <div className="w-full h-full flex items-center justify-center">
           {iseGameOver ? (
             <GameOverScreen finalScore={score} onPlayAgain={() => {
@@ -81,18 +81,17 @@ function App() {
             <NewGameScreen onGameStart={() => setGameStarted(true)} />
           )}
         </div>
-        <div className="mt-auto flex flex-col gap-4">
-          {gameStarted && (
-            <>
-              <div className="flex items-center justify-between">
-                <HealthBar maxHealth={MAX_HEALTH} health={lives} />
-                <span className="text-blue-100 font-bold uppercase">{`SCORE: ${score}`}</span>
+        <PianoBoard hud={
+            gameStarted && (
+              <div className="mb-4 flex flex-col gap-4">
+                <div className="flex items-center justify-between">
+                  <HealthBar maxHealth={MAX_HEALTH} health={lives} />
+                  <span className="text-blue-100 font-bold uppercase text-lg">{`SCORE: ${score}`}</span>
+                </div>
+                <TimerBar maxTime={maxTime} time={timeLeft} className="w-full" />
               </div>
-              <TimerBar maxTime={maxTime} time={timeLeft} className="w-full" />
-            </>
-          )}
-          <PianoBoard onTilesChange={handleTilesChange} />
-        </div>
+            )
+          } onTilesChange={handleTilesChange} />
       </div>
     </div>
   );

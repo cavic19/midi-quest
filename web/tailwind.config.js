@@ -4,7 +4,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#1E40AF', // Custom blue
         "my-blue-100": "4E9D9D",
         "my-blue-400": "#195866",
         "my-blue-900": "#2CFEFF",
@@ -23,6 +22,9 @@ module.exports = {
         // Tilex pressed state
         "my-blue-100": "#A2C2CF",
         "my-blue-400": "#428CA9",
+
+        "moonstone-300": "#71A1AB",
+        "moonstone-600": "#6096A1"
       },
     },
   },
