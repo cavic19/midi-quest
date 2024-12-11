@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Note } from "./models/Note";
 import { MAX_HEALTH } from "./config";
 import HealthBar from "./components/HealthBar";
@@ -16,6 +16,7 @@ function App() {
   const [lives, setLives] = useState(MAX_HEALTH);
   const [score, setScore] = useState(0);
   const [note, setNote] = useState(() => noteGenerator.next());
+  const noteNotation = useMemo(() => note.randomNotation(), [note]);
   const maxTime = generateTime(score);
   const [gameStarted, setGameStarted] = useState(false);
   const [iseGameOver, setIsGameOver] = useState(false);
@@ -62,7 +63,6 @@ function App() {
 
   }, [note, gameStarted]);
 
-
   return (
     // This should be in body...
     <div className='w-screen h-screen bg-gradient-to-b from-midnight-green to-my-cyan-600'>
@@ -76,7 +76,7 @@ function App() {
               setGameStarted(true);
             }} />
           ) : gameStarted ? (
-            <span className="text-white text-6xl">{note}</span>
+            <span className="text-white text-6xl">{noteNotation}</span>
           ) : (
             <NewGameScreen onGameStart={() => setGameStarted(true)} />
           )}
