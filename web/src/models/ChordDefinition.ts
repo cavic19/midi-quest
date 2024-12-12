@@ -19,7 +19,7 @@ export class ChordDefinition {
     createChord(root: Note): Chord {
         const rootIndex = NOTES.indexOf(root);
         return new Chord(
-            `${root.randomNotation()} ${this.namePattern}`,
+            `${root.name()} ${this.namePattern}`,
             this.intervals.map(i => NOTES[(rootIndex + i) % NOTES.length])
         )
     }

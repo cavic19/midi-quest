@@ -3,7 +3,7 @@ import KeyboardShape from "./KeyboardShape";
 
 class Chord implements KeyboardShape {
     constructor(
-        public name: string,
+        public notation: string,
         public readonly notes: ReadonlyArray<Note>
     ) {
 
@@ -22,6 +22,10 @@ class Chord implements KeyboardShape {
         } else {
             return false
         }
+    }
+
+    name(): string {
+        return this.notation
     }
 }
 

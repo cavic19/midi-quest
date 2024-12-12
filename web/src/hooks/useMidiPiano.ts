@@ -21,19 +21,21 @@ function useMidiPiano(onNoteOn?: (note: Note) => void, onNoteOf?: (note: Note) =
         }
     }, []);
 
-    if (midiAccess) {
-        Array.from(midiAccess.inputs.values()).forEach(input => {
-            input.onmidimessage = ({ data }) => {
-                const [command, note] = Array.from(data)
-                if (command == MIDI_NOTE_ON) {
-                    onNoteOn?.(NOTES[note % NOTES.length])
-
-                } else if (command == MIDI_NOTE_OFF) {
-                    onNoteOf?.(NOTES[note % NOTES.length])
-                }
-            };
-        })
-    }
+    useEffect(() => {
+        if (midiAccess) {
+            Array.from(midiAccess.inputs.values()).forEach(input => {
+                input.onmidimessage = ({ data }) => {
+                    const [command, note] = Array.from(data)
+                    if (command == MIDI_NOTE_ON) {
+                        onNoteOn?.(NOTES[note % NOTES.length])
+    
+                    } else if (command == MIDI_NOTE_OFF) {
+                        onNoteOf?.(NOTES[note % NOTES.length])
+                    }
+                };
+            })
+        }
+    }, [midiAccess]);
 }
 
 export default useMidiPiano;

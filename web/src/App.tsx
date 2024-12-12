@@ -4,19 +4,23 @@ import { MAX_HEALTH } from "./config";
 import HealthBar from "./components/HealthBar";
 import useTimer from "./hooks/useTimer";
 import TimerBar from "./components/TimeBar";
-import PianoBoard from "./components/PianoBoard";
+import PianoBoard, { PressedTilesChangeEvent } from "./components/PianoBoard";
 import NewGameScreen from "./components/NewGameScreen";
 import GameOverScreen from "./components/GameOverScreen";
 import generateTime from "./generateTime";
+import KeyboardShapeGenerator from "./models/KeyboardShapeGenerator";
+import ChordGenerator from "./models/ChordGenerator";
+import ChordDefinition from "./models/ChordDefinition";
+import KeyboardShape from "./models/KeyboardShape";
 import NoteGenerator from "./models/NoteGenerator";
 
 
 function App() {
-  const { current: noteGenerator } = useRef(new NoteGenerator());
+  const { current: noteGenerator } = useRef<KeyboardShapeGenerator>(new NoteGenerator());
   const [lives, setLives] = useState(MAX_HEALTH);
   const [score, setScore] = useState(0);
-  const [note, setNote] = useState(() => noteGenerator.next());
-  const noteNotation = useMemo(() => note.randomNotation(), [note]);
+  const [shape, setShape] = useState<KeyboardShape>(() =>  noteGenerator.next());
+  const noteNotation = useMemo(() => shape.name(), [shape]);
   const maxTime = generateTime(score);
   const [gameStarted, setGameStarted] = useState(false);
   const [iseGameOver, setIsGameOver] = useState(false);
@@ -35,7 +39,7 @@ function App() {
     if (timeLeft == 0) {
       restartTimer();
       setLives(ls => ls - 1);
-      setNote(noteGenerator.next())
+      setShape(noteGenerator.next())
     }
   }, [timeLeft]);
 
@@ -47,21 +51,22 @@ function App() {
   }, [lives]);
 
 
-  const handleTilesChange = useCallback((tiles: Note[]) => {
-    if (gameStarted) {
-      if (tiles.length == 1 && tiles[0] == note) {
-        setNote(noteGenerator.next());
+  const handleTilesChange = useCallback((tiles: Note[], event: PressedTilesChangeEvent) => {
+    if (gameStarted && event === "PRESSED") {
+      if (!shape.includesNotes(tiles)) {
+        // Player pressed extra notes => fail
+        setLives(lives => lives - 1)
+      } else if (shape.equalTo(tiles)) {
+        setShape(noteGenerator.next());
         setScore(sc => sc + 1);
         restartTimer();
-      } else if (tiles.length == 0) {
-        // DO nothing
       } else {
-        // TODO: If lives is lower than 0 or equal GAME OVER
-        setLives(lives => lives - 1)
+        // This means that user pressed onlu some of the notes making up the shape
+        // E.g. C - E but hasn't pressed yet G to create C major chord, so he still has a chance
       }
     }
 
-  }, [note, gameStarted]);
+  }, [shape, gameStarted]);
 
   return (
     // This should be in body...
@@ -82,16 +87,16 @@ function App() {
           )}
         </div>
         <PianoBoard hud={
-            gameStarted && (
-              <div className="mb-4 flex flex-col gap-4">
-                <div className="flex items-center justify-between">
-                  <HealthBar maxHealth={MAX_HEALTH} health={lives} />
-                  <span className="text-blue-100 font-bold uppercase text-lg">{`SCORE: ${score}`}</span>
-                </div>
-                <TimerBar maxTime={maxTime} time={timeLeft} className="w-full" />
+          gameStarted && (
+            <div className="mb-4 flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <HealthBar maxHealth={MAX_HEALTH} health={lives} />
+                <span className="text-blue-100 font-bold uppercase text-lg">{`SCORE: ${score}`}</span>
               </div>
-            )
-          } onTilesChange={handleTilesChange} />
+              <TimerBar maxTime={maxTime} time={timeLeft} className="w-full" />
+            </div>
+          )
+        } onTilesChange={handleTilesChange} />
       </div>
     </div>
   );

@@ -14,26 +14,39 @@ const BLACK_TIME_HEIGHT = 200;
 const TILE_GAP = 16;
 const OCTAVE_WIDTH = 7 * WHITE_TILE_WIDTH + 6 * TILE_GAP
 
+export type PressedTilesChangeEvent = "PRESSED" | "RELEASED"
+
 type PianoBoardProps = {
-    onTilesChange?: (notes: Note[]) => void
+    onTilesChange?: (notes: Note[], event: PressedTilesChangeEvent) => void
     // Component display right above the active area of the piano
     hud?: ReactNode
 } & HasClassname
 
+type PressedTilesState = {
+    notes: Note[], 
+    event: PressedTilesChangeEvent
+}
+
 function PianoBoard({ hud, onTilesChange, className }: PianoBoardProps) {
-    const [pressedTiles, setPressedTiles] = useState<Note[]>([]);
-    
+    const [pressedTilesState, setPressedTilesState] = useState<PressedTilesState>({ notes: [], event: "RELEASED" });
+
     useEffect(() => {
-        onTilesChange?.(pressedTiles)
-    }, [pressedTiles]);
+        onTilesChange?.(pressedTilesState.notes, pressedTilesState.event)
+    }, [pressedTilesState]);
 
 
     const handleNoteOn = useCallback((note: Note) => {
-        setPressedTiles(oldTiles => [...oldTiles, note])
+        setPressedTilesState(({ notes }) => ({
+            notes: [...notes, note],
+            event: "PRESSED"
+        }));
     }, []);
 
     const handleNoteOff = useCallback((note: Note) => {
-        setPressedTiles(oldTiles => oldTiles.filter(oldNote => oldNote !== note))
+        setPressedTilesState(({ notes }) => ({
+            notes:  notes.filter(oldNote => oldNote !== note),
+            event: "RELEASED"
+        }))
     }, []);
 
     // We want to display dummy octaves on the siedes, when the screen is too wide
@@ -62,19 +75,19 @@ function PianoBoard({ hud, onTilesChange, className }: PianoBoardProps) {
             <div className="flex relative w-fit h-fit" style={{ gap: TILE_GAP }}>
                 {new Array(displOctaves).fill(null).map((_, i) => (
                     <>
-                        <BlackTile pressed={pressedTiles.includes(Note.C_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 1) }} />
-                        <BlackTile pressed={pressedTiles.includes(Note.D_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 2) }} />
-                        <BlackTile pressed={pressedTiles.includes(Note.F_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 4) }} />
-                        <BlackTile pressed={pressedTiles.includes(Note.G_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 5) }} />
-                        <BlackTile pressed={pressedTiles.includes(Note.A_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 6) }} />
+                        <BlackTile pressed={pressedTilesState.notes.includes(Note.C_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 1) }} />
+                        <BlackTile pressed={pressedTilesState.notes.includes(Note.D_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 2) }} />
+                        <BlackTile pressed={pressedTilesState.notes.includes(Note.F_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 4) }} />
+                        <BlackTile pressed={pressedTilesState.notes.includes(Note.G_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 5) }} />
+                        <BlackTile pressed={pressedTilesState.notes.includes(Note.A_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 6) }} />
 
-                        <WhiteTile pressed={pressedTiles.includes(Note.C)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile pressed={pressedTiles.includes(Note.D)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile pressed={pressedTiles.includes(Note.E)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile pressed={pressedTiles.includes(Note.F)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile pressed={pressedTiles.includes(Note.G)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile pressed={pressedTiles.includes(Note.A)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile pressed={pressedTiles.includes(Note.B)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile pressed={pressedTilesState.notes.includes(Note.C)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile pressed={pressedTilesState.notes.includes(Note.D)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile pressed={pressedTilesState.notes.includes(Note.E)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile pressed={pressedTilesState.notes.includes(Note.F)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile pressed={pressedTilesState.notes.includes(Note.G)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile pressed={pressedTilesState.notes.includes(Note.A)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile pressed={pressedTilesState.notes.includes(Note.B)} active={i + 1 == activeOctaceRange} />
                     </>
                 ))}
             </div>
