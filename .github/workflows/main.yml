@@ -15,7 +15,7 @@ jobs:
         working-directory: ./web
         run: yarn install --frozen-lockfile
       - name: Test
-        working-directory: /.web
+        working-directory: ./web
         run: yarn test
       - name: Build bundle
         working-directory: ./web
