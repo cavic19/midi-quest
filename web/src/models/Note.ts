@@ -1,6 +1,7 @@
 import randomItem from "../utils/randomItem";
+import KeyboardShape from "./KeyboardShape";
 
-export class Note {
+export class Note implements KeyboardShape {
     static readonly C = new Note(["C"]);
     static readonly D = new Note(["D"]);
     static readonly E = new Note(["E"]);
@@ -22,6 +23,12 @@ export class Note {
     private constructor(
         public notations: string[]
     ) {
+    }
+    includesNotes(notes: Note[]): boolean {
+        return this.equalTo(notes);
+    }
+    equalTo(notes: Note[]): boolean {
+        return notes.length == 1 && notes[0] == this
     }
 
     randomNotation(): string {
