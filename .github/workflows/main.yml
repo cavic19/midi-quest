@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Build 👷
+    name: Build 👷 and Test ⚒️
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -14,6 +14,9 @@ jobs:
       - name: Install dependencies
         working-directory: ./web
         run: yarn install --frozen-lockfile
+      - name: Test
+        working-directory: /.web
+        run: yarn test
       - name: Build bundle
         working-directory: ./web
         env:
