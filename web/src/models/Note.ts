@@ -27,8 +27,14 @@ export class Note implements KeyboardShape {
     includesNotes(notes: Note[]): boolean {
         return this.equalTo(notes);
     }
-    equalTo(notes: Note[]): boolean {
-        return notes.length == 1 && notes[0] == this
+    equalTo(shape: Note[] | KeyboardShape): boolean {
+        if (Array.isArray(shape)) {
+            return shape.length == 1 && shape[0] == this
+        } else if (shape instanceof Note) {
+            return shape == this
+        } else {
+            return false
+        }
     }
 
     randomNotation(): string {

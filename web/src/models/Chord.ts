@@ -13,9 +13,15 @@ class Chord implements KeyboardShape {
         return notes.every(note => this.notes.includes(note))
     }
 
-    equalTo(notes: Note[]): boolean {
-        const distinctNotes = new Set(notes)
-        return distinctNotes.size == this.notes.length && this.includesNotes(Array.from(distinctNotes));
+    equalTo(shape: Note[] | KeyboardShape): boolean {
+        if (Array.isArray(shape)) {
+            const distinctNotes = new Set(shape)
+            return distinctNotes.size == this.notes.length && this.includesNotes(Array.from(distinctNotes));
+        } else if (shape instanceof Chord) {
+            return this.equalTo([...shape.notes])
+        } else {
+            return false
+        }
     }
 }
 
