@@ -5,4 +5,6 @@ MIDI Quest is a (browser game)[https://midiquest.eu/], where you can improve yoi
 
 ## TODO:
 - Add leaderboards
-- Add chord mode
+- Add inversions
+- Link with chord DB such as https://github.com/JNKKKK/pianochord.io/blob/master/src/libs/db.ts
+- Add scales
