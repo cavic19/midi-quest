@@ -9,6 +9,7 @@ enum Interval {
     DIMINISHED_FIFTH = 6,
     AUGMENTED_FOURTH = 6,
     PERFECT_FIFTH = 7,
+    AUGMENTED_FIFTH = 8,
     MINOR_SIXTH = 8,
     MAJOR_SIXTH = 9,
     MINOR_SEVENTH = 10,

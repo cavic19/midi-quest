@@ -21,7 +21,6 @@ function useLocaStorageGameConfiguration(): [GameConfiguration | undefined, (new
     }, [chordDefinitionsKeys, gameMode])
 
     const setter = useCallback((newConfig: GameConfiguration | undefined) => {
-        console.log("SET", newConfig)
         if (newConfig === undefined) {
             localStorage.removeItem(CHORD_DEFINITIONS_KEY);
             localStorage.removeItem(GAME_MODE_KEY);
