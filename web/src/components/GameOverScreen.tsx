@@ -1,4 +1,5 @@
 import { ArrowCounterClockwise } from "@phosphor-icons/react";
+import GameConfigurationComponent from "./GameConfigurationComponent";
 
 
 type GameOverScreenProps = {
@@ -13,6 +14,7 @@ type GameOverScreenProps = {
           <span className="text-5xl text-white">Game Over</span>
           <span className="text-3xl text-my-blue-100">{`Score ${finalScore}`}</span>
         </div>
+        <GameConfigurationComponent />
         <div className="flex flex-col items-center hover:cursor-pointer" onClick={onPlayAgain}>
           <ArrowCounterClockwise size={32} weight="fill" className="text-white" />
           <span className="font-semibold text-white text-xl">Start Over</span>

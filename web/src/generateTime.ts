@@ -1,4 +1,5 @@
-import { MAX_TIME } from "./config";
+import GameConfiguration from "./models/GameConfiguration";
+
 
 function generateTime(score: number): number {
     /*
@@ -13,7 +14,7 @@ function generateTime(score: number): number {
     if (score >= MAX_SCORE) {
       return MIN_TIME
     } else {
-      return (MIN_TIME - MAX_TIME) / MAX_SCORE * score + MAX_TIME
+      return (MIN_TIME - GameConfiguration.MAX_TIME) / MAX_SCORE * score + GameConfiguration.MAX_TIME
     }
   }
   
