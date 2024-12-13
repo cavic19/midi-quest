@@ -75,19 +75,19 @@ function PianoBoard({ hud, onTilesChange, className }: PianoBoardProps) {
             <div className="flex relative w-fit h-fit" style={{ gap: TILE_GAP }}>
                 {new Array(displOctaves).fill(null).map((_, i) => (
                     <>
-                        <BlackTile onTilePress={() => handleNoteOn(Note.C_SHARP)} onTileRelease={() => handleNoteOff(Note.C_SHARP)} pressed={pressedTilesState.notes.includes(Note.C_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 1) }} />
-                        <BlackTile onTilePress={() => handleNoteOn(Note.D_SHARP)} onTileRelease={() => handleNoteOff(Note.D_SHARP)} pressed={pressedTilesState.notes.includes(Note.D_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 2) }} />
-                        <BlackTile onTilePress={() => handleNoteOn(Note.F_SHARP)} onTileRelease={() => handleNoteOff(Note.F_SHARP)} pressed={pressedTilesState.notes.includes(Note.F_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 4) }} />
-                        <BlackTile onTilePress={() => handleNoteOn(Note.G_SHARP)} onTileRelease={() => handleNoteOff(Note.G_SHARP)} pressed={pressedTilesState.notes.includes(Note.G_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 5) }} />
-                        <BlackTile onTilePress={() => handleNoteOn(Note.A_SHARP)} onTileRelease={() => handleNoteOff(Note.A_SHARP)} pressed={pressedTilesState.notes.includes(Note.A_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 6) }} />
+                        <BlackTile keys={["W"]} onTilePress={() => handleNoteOn(Note.C_SHARP)} onTileRelease={() => handleNoteOff(Note.C_SHARP)} pressed={pressedTilesState.notes.includes(Note.C_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 1) }} />
+                        <BlackTile keys={["E"]} onTilePress={() => handleNoteOn(Note.D_SHARP)} onTileRelease={() => handleNoteOff(Note.D_SHARP)} pressed={pressedTilesState.notes.includes(Note.D_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 2) }} />
+                        <BlackTile keys={["T"]} onTilePress={() => handleNoteOn(Note.F_SHARP)} onTileRelease={() => handleNoteOff(Note.F_SHARP)} pressed={pressedTilesState.notes.includes(Note.F_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 4) }} />
+                        <BlackTile keys={["Y"]} onTilePress={() => handleNoteOn(Note.G_SHARP)} onTileRelease={() => handleNoteOff(Note.G_SHARP)} pressed={pressedTilesState.notes.includes(Note.G_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 5) }} />
+                        <BlackTile keys={["U"]} onTilePress={() => handleNoteOn(Note.A_SHARP)} onTileRelease={() => handleNoteOff(Note.A_SHARP)} pressed={pressedTilesState.notes.includes(Note.A_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 6) }} />
 
-                        <WhiteTile onTilePress={() => handleNoteOn(Note.C)} onTileRelease={() => handleNoteOff(Note.C)} pressed={pressedTilesState.notes.includes(Note.C)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile onTilePress={() => handleNoteOn(Note.D)} onTileRelease={() => handleNoteOff(Note.D)} pressed={pressedTilesState.notes.includes(Note.D)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile onTilePress={() => handleNoteOn(Note.E)} onTileRelease={() => handleNoteOff(Note.E)} pressed={pressedTilesState.notes.includes(Note.E)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile onTilePress={() => handleNoteOn(Note.F)} onTileRelease={() => handleNoteOff(Note.F)} pressed={pressedTilesState.notes.includes(Note.F)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile onTilePress={() => handleNoteOn(Note.G)} onTileRelease={() => handleNoteOff(Note.G)} pressed={pressedTilesState.notes.includes(Note.G)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile onTilePress={() => handleNoteOn(Note.A)} onTileRelease={() => handleNoteOff(Note.A)} pressed={pressedTilesState.notes.includes(Note.A)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile onTilePress={() => handleNoteOn(Note.B)} onTileRelease={() => handleNoteOff(Note.B)} pressed={pressedTilesState.notes.includes(Note.B)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile keys={["A"]} onTilePress={() => handleNoteOn(Note.C)} onTileRelease={() => handleNoteOff(Note.C)} pressed={pressedTilesState.notes.includes(Note.C)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile keys={["S"]} onTilePress={() => handleNoteOn(Note.D)} onTileRelease={() => handleNoteOff(Note.D)} pressed={pressedTilesState.notes.includes(Note.D)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile keys={["D"]} onTilePress={() => handleNoteOn(Note.E)} onTileRelease={() => handleNoteOff(Note.E)} pressed={pressedTilesState.notes.includes(Note.E)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile keys={["F"]} onTilePress={() => handleNoteOn(Note.F)} onTileRelease={() => handleNoteOff(Note.F)} pressed={pressedTilesState.notes.includes(Note.F)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile keys={["G"]} onTilePress={() => handleNoteOn(Note.G)} onTileRelease={() => handleNoteOff(Note.G)} pressed={pressedTilesState.notes.includes(Note.G)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile keys={["H"]} onTilePress={() => handleNoteOn(Note.A)} onTileRelease={() => handleNoteOff(Note.A)} pressed={pressedTilesState.notes.includes(Note.A)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile keys={["J"]} onTilePress={() => handleNoteOn(Note.B)} onTileRelease={() => handleNoteOff(Note.B)} pressed={pressedTilesState.notes.includes(Note.B)} active={i + 1 == activeOctaceRange} />
                     </>
                 ))}
             </div>
@@ -99,7 +99,9 @@ type TileProps = {
     active?: boolean
     pressed?: boolean
     onTilePress?: () => void
-    onTileRelease?: () => void
+    onTileRelease?: () => void,
+    // Desktop keyboard keys that also trigger this note
+    keys?: string[]
 } & HasStyle & HasClassname
 
 function WhiteTile(props: TileProps) {
@@ -145,6 +147,28 @@ function BlackTile(props: TileProps) {
 
 function Tile(props: TileProps) {
     const [tileDown, setTileDown] = useState(false);
+    useEffect(() => {
+        if (props.active) {
+            const handleKeyDown = (e: KeyboardEvent) => {
+                if (props.keys?.map(k => k.toLowerCase())?.includes(e.key.toLocaleLowerCase())) {
+                    props.onTilePress?.();
+                }
+            }
+            const handleKeyUp = (e: KeyboardEvent) => {
+                if (props.keys?.map(k => k.toLowerCase()).includes(e.key.toLowerCase())) {
+                    props.onTileRelease?.();
+                }
+            }
+    
+            window.addEventListener("keydown", handleKeyDown);
+            window.addEventListener("keyup", handleKeyUp);
+            return () => {
+                window.removeEventListener("keydown", handleKeyDown);
+                window.addEventListener("keyup", handleKeyUp);
+            }
+        }
+    }, []);
+
     return (
         <div
             className={classNames("rounded-xl", props.className)}
@@ -177,11 +201,6 @@ function Tile(props: TileProps) {
         />
     )
 }
-
-
-
-
-
 
 
 function blackTilePosition(i: number): number {
