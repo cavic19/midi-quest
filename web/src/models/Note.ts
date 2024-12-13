@@ -9,15 +9,15 @@ export class Note implements KeyboardShape {
     static readonly G = new Note(["G"]);
     static readonly A = new Note(["A"]);
     static readonly B = new Note(["B"]);
-    static readonly C_SHARP = new Note(["C#", "Db"]);
+    static readonly C_SHARP = new Note(["C♯", "D♭"]);
     static readonly D_FLAT = Note.C_SHARP;
-    static readonly D_SHARP = new Note(["D#", "Eb"]);
+    static readonly D_SHARP = new Note(["D♯", "E♭"]);
     static readonly E_FLAT = Note.D_SHARP;
-    static readonly F_SHARP = new Note(["F#", "Gb"]);
+    static readonly F_SHARP = new Note(["F♯", "G♭"]);
     static readonly G_FLAT = Note.F_SHARP;
-    static readonly G_SHARP = new Note(["G#", "Ab"]);
+    static readonly G_SHARP = new Note(["G♯", "A♭"]);
     static readonly A_FLAT = Note.G_SHARP;
-    static readonly A_SHARP = new Note(["A#", "Bb"]);
+    static readonly A_SHARP = new Note(["A♯", "B♭"]);
     static readonly B_FLAT = Note.A_SHARP;
 
     private constructor(
