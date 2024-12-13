@@ -23,7 +23,7 @@ type PianoBoardProps = {
 } & HasClassname
 
 type PressedTilesState = {
-    notes: Note[], 
+    notes: Note[],
     event: PressedTilesChangeEvent
 }
 
@@ -44,7 +44,7 @@ function PianoBoard({ hud, onTilesChange, className }: PianoBoardProps) {
 
     const handleNoteOff = useCallback((note: Note) => {
         setPressedTilesState(({ notes }) => ({
-            notes:  notes.filter(oldNote => oldNote !== note),
+            notes: notes.filter(oldNote => oldNote !== note),
             event: "RELEASED"
         }))
     }, []);
@@ -75,19 +75,19 @@ function PianoBoard({ hud, onTilesChange, className }: PianoBoardProps) {
             <div className="flex relative w-fit h-fit" style={{ gap: TILE_GAP }}>
                 {new Array(displOctaves).fill(null).map((_, i) => (
                     <>
-                        <BlackTile pressed={pressedTilesState.notes.includes(Note.C_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 1) }} />
-                        <BlackTile pressed={pressedTilesState.notes.includes(Note.D_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 2) }} />
-                        <BlackTile pressed={pressedTilesState.notes.includes(Note.F_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 4) }} />
-                        <BlackTile pressed={pressedTilesState.notes.includes(Note.G_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 5) }} />
-                        <BlackTile pressed={pressedTilesState.notes.includes(Note.A_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 6) }} />
+                        <BlackTile onTilePress={() => handleNoteOn(Note.C_SHARP)} onTileRelease={() => handleNoteOff(Note.C_SHARP)} pressed={pressedTilesState.notes.includes(Note.C_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 1) }} />
+                        <BlackTile onTilePress={() => handleNoteOn(Note.D_SHARP)} onTileRelease={() => handleNoteOff(Note.D_SHARP)} pressed={pressedTilesState.notes.includes(Note.D_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 2) }} />
+                        <BlackTile onTilePress={() => handleNoteOn(Note.F_SHARP)} onTileRelease={() => handleNoteOff(Note.F_SHARP)} pressed={pressedTilesState.notes.includes(Note.F_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 4) }} />
+                        <BlackTile onTilePress={() => handleNoteOn(Note.G_SHARP)} onTileRelease={() => handleNoteOff(Note.G_SHARP)} pressed={pressedTilesState.notes.includes(Note.G_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 5) }} />
+                        <BlackTile onTilePress={() => handleNoteOn(Note.A_SHARP)} onTileRelease={() => handleNoteOff(Note.A_SHARP)} pressed={pressedTilesState.notes.includes(Note.A_SHARP)} active={i + 1 == activeOctaceRange} style={{ left: blackTilePosition(i * 7 + 6) }} />
 
-                        <WhiteTile pressed={pressedTilesState.notes.includes(Note.C)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile pressed={pressedTilesState.notes.includes(Note.D)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile pressed={pressedTilesState.notes.includes(Note.E)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile pressed={pressedTilesState.notes.includes(Note.F)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile pressed={pressedTilesState.notes.includes(Note.G)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile pressed={pressedTilesState.notes.includes(Note.A)} active={i + 1 == activeOctaceRange} />
-                        <WhiteTile pressed={pressedTilesState.notes.includes(Note.B)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile onTilePress={() => handleNoteOn(Note.C)} onTileRelease={() => handleNoteOff(Note.C)} pressed={pressedTilesState.notes.includes(Note.C)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile onTilePress={() => handleNoteOn(Note.D)} onTileRelease={() => handleNoteOff(Note.D)} pressed={pressedTilesState.notes.includes(Note.D)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile onTilePress={() => handleNoteOn(Note.E)} onTileRelease={() => handleNoteOff(Note.E)} pressed={pressedTilesState.notes.includes(Note.E)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile onTilePress={() => handleNoteOn(Note.F)} onTileRelease={() => handleNoteOff(Note.F)} pressed={pressedTilesState.notes.includes(Note.F)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile onTilePress={() => handleNoteOn(Note.G)} onTileRelease={() => handleNoteOff(Note.G)} pressed={pressedTilesState.notes.includes(Note.G)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile onTilePress={() => handleNoteOn(Note.A)} onTileRelease={() => handleNoteOff(Note.A)} pressed={pressedTilesState.notes.includes(Note.A)} active={i + 1 == activeOctaceRange} />
+                        <WhiteTile onTilePress={() => handleNoteOn(Note.B)} onTileRelease={() => handleNoteOff(Note.B)} pressed={pressedTilesState.notes.includes(Note.B)} active={i + 1 == activeOctaceRange} />
                     </>
                 ))}
             </div>
@@ -98,31 +98,91 @@ function PianoBoard({ hud, onTilesChange, className }: PianoBoardProps) {
 type TileProps = {
     active?: boolean
     pressed?: boolean
-} & HasStyle
+    onTilePress?: () => void
+    onTileRelease?: () => void
+} & HasStyle & HasClassname
 
-function WhiteTile({ active, pressed, style }: TileProps) {
-    if (active) {
+function WhiteTile(props: TileProps) {
+    if (props.active) {
         return (
-            <div className={classNames("rounded-xl", { "bg-my-blue-100": pressed, "bg-white": !pressed })} style={{ ...style, width: WHITE_TILE_WIDTH, height: WHITE_TILE_HEIGHT }} />
+            <Tile
+                {...props}
+                className={classNames("rounded-xl", { "bg-my-blue-100": props.pressed, "bg-white": !props.pressed })}
+                style={{ ...props.style, width: WHITE_TILE_WIDTH, height: WHITE_TILE_HEIGHT }}
+            />
         )
     } else {
         return (
-            <div className={"rounded-xl bg-moonstone-300"} style={{ ...style, width: WHITE_TILE_WIDTH, height: WHITE_TILE_HEIGHT }} />
+            <Tile
+                {...props}
+                className={"rounded-xl bg-moonstone-300"} 
+                style={{ ...props.style, width: WHITE_TILE_WIDTH, height: WHITE_TILE_HEIGHT }}
+            />
         )
     }
 }
 
-function BlackTile({ active, pressed, style }: TileProps) {
-    if (active) {
+function BlackTile(props: TileProps) {
+    if (props.active) {
         return (
-            <div className={classNames("bg-black rounded-xl absolute -top-2 drop-shadow-md", { "bg-my-blue-400": pressed })} style={{ ...style, width: BLACK_TILE_WIDTH, height: BLACK_TIME_HEIGHT }} />
+            <Tile
+                {...props}
+                style={{ ...props.style, width: BLACK_TILE_WIDTH, height: BLACK_TIME_HEIGHT }}
+                className={classNames("bg-black absolute -top-2 drop-shadow-md", { "bg-my-blue-400": props.pressed })}
+            />
         )
     } else {
         return (
-            <div className={"rounded-xl absolute -top-2 drop-shadow-md bg-moonstone-600"} style={{ ...style, width: BLACK_TILE_WIDTH, height: BLACK_TIME_HEIGHT }} />
+            <Tile
+                {...props}
+                className={"rounded-xl absolute -top-2 drop-shadow-md bg-moonstone-600"}
+                 style={{ ...props.style, width: BLACK_TILE_WIDTH, height: BLACK_TIME_HEIGHT }}
+            />
         )
     }
 }
+
+
+function Tile(props: TileProps) {
+    const [tileDown, setTileDown] = useState(false);
+    return (
+        <div
+            className={classNames("rounded-xl", props.className)}
+            style={props.style}
+            onMouseDown={() => {
+                if (props.active) {
+                    setTileDown(true);
+                    props.onTilePress?.();
+                }
+            }}
+            onMouseUp={() => {
+                if (props.active) {
+                    setTileDown(false);
+                    props.onTileRelease?.();
+                }
+            }}
+            onMouseLeave={() => {
+                if (props.active && tileDown) {
+                    setTileDown(false);
+                    props.onTileRelease?.();
+                }
+            }}
+            onMouseEnter={e => {
+                // If primary (left) button down
+                if (props.active && e.buttons === 1 && !tileDown) {
+                    setTileDown(true);
+                    props.onTilePress?.();
+                }
+            }}
+        />
+    )
+}
+
+
+
+
+
+
 
 function blackTilePosition(i: number): number {
     return i * WHITE_TILE_WIDTH + TILE_GAP * (i - 2)

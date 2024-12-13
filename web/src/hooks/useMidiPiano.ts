@@ -10,7 +10,8 @@ function useMidiPiano(onNoteOn?: (note: Note) => void, onNoteOf?: (note: Note) =
 
     useEffect(() => {
         if (!midiAccess) {
-            navigator
+            try {
+                navigator
                 .requestMIDIAccess()
                 .catch(console.error)
                 .then(access => {
@@ -18,6 +19,9 @@ function useMidiPiano(onNoteOn?: (note: Note) => void, onNoteOf?: (note: Note) =
                         setMidiAccess(access)
                     }
                 })
+            } catch (exception) {
+                console.error(`Cannot request midi access because of error=${exception}`)
+            }
         }
     }, []);
 
