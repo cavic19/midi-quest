@@ -164,7 +164,7 @@ function Tile(props: TileProps) {
             window.addEventListener("keyup", handleKeyUp);
             return () => {
                 window.removeEventListener("keydown", handleKeyDown);
-                window.addEventListener("keyup", handleKeyUp);
+                window.removeEventListener("keyup", handleKeyUp);
             }
         }
     }, []);
