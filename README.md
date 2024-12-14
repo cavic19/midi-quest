@@ -9,3 +9,4 @@ MIDI Quest is a (browser game)[https://midiquest.eu/], where you can improve yoi
 - Link with chord DB such as https://github.com/JNKKKK/pianochord.io/blob/master/src/libs/db.ts
 - Add complicated chord spanning multiple octaves (add 11, 13 etc., inversion!)
 - Add scales
+- The keyboard should support at least 2 octaves otherwise it sounds wonky with different chords
