@@ -13,6 +13,7 @@ import NoteGenerator from "./models/NoteGenerator";
 import classNames from "classnames";
 import GameConfiguration from "./models/GameConfiguration";
 import useGameConfiguration from "./hooks/useGameConfiguration";
+import { ReactComponent as GitHub } from './assets/GitHub.svg';
 
 // Should be lower than human reaction time < 150ms
 const SCORE_FLASH_DURATION = 100
@@ -95,7 +96,12 @@ function App() {
   }, [shape, isGameRunning]);
 
   return (
-    <div className='w-screen h-screen bg-gradient-to-b from-midnight-green to-my-cyan-600'>
+    <div className='w-screen h-screen bg-gradient-to-b from-midnight-green to-my-cyan-600 overflow-y-hidden'>
+      <header className="text-my-blue-100 text-sm p-2 w-fit mx-auto flex items-center gap-1">
+        <span className="whitespace-pre">Made by David Tomecek. Open sourced at</span>
+        <GitHub />
+        <a href="https://github.com/cavic19/midi-quest" target="_blank" className="underline">GitHub.</a>
+      </header>
       <div className="h-screen flex flex-col w-fit maxx-w-[1200px] mx-auto">
         <div className="w-full h-full flex items-center justify-center">
           {iseGameOver ? (

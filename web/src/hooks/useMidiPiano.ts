@@ -4,7 +4,7 @@ import { Note, NOTES } from "../models/Note";
 const MIDI_NOTE_ON = 144
 const MIDI_NOTE_OFF = 128
 
-// TODO: This should return error if there is no midi
+
 function useMidiPiano(onNoteOn?: (note: Note) => void, onNoteOf?: (note: Note) => void) {
     const [midiAccess, setMidiAccess] = useState<WebMidi.MIDIAccess>()
 
@@ -28,6 +28,7 @@ function useMidiPiano(onNoteOn?: (note: Note) => void, onNoteOf?: (note: Note) =
     useEffect(() => {
         if (midiAccess) {
             Array.from(midiAccess.inputs.values()).forEach(input => {
+                console.log(input)
                 input.onmidimessage = ({ data }) => {
                     const [command, note] = Array.from(data)
                     if (command == MIDI_NOTE_ON) {
