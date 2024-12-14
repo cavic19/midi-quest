@@ -64,12 +64,14 @@ export function Tile(props: TileProps) {
     useEffect(() => {
         if (props.active) {
             const handleKeyDown = (e: KeyboardEvent) => {
-                if (props.keys?.map(k => k.toLowerCase())?.includes(e.key.toLocaleLowerCase())) {
+                if (!tileDown && props.keys?.map(k => k.toLowerCase())?.includes(e.key.toLocaleLowerCase())) {
+                    setTileDown(true);
                     props.onTilePress?.();
                 }
             }
             const handleKeyUp = (e: KeyboardEvent) => {
-                if (props.keys?.map(k => k.toLowerCase()).includes(e.key.toLowerCase())) {
+                if (tileDown && props.keys?.map(k => k.toLowerCase()).includes(e.key.toLowerCase())) {
+                    setTileDown(false);
                     props.onTileRelease?.();
                 }
             }
@@ -81,7 +83,7 @@ export function Tile(props: TileProps) {
                 window.removeEventListener("keyup", handleKeyUp);
             }
         }
-    }, []);
+    }, [tileDown]);
 
     return (
         <div
