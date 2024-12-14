@@ -13,8 +13,6 @@ import NoteGenerator from "./models/NoteGenerator";
 import classNames from "classnames";
 import GameConfiguration from "./models/GameConfiguration";
 import useGameConfiguration from "./hooks/useGameConfiguration";
-import ChordDefinition from "./models/ChordDefinition";
-
 
 // Should be lower than human reaction time < 150ms
 const SCORE_FLASH_DURATION = 100

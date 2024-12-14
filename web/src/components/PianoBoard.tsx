@@ -6,6 +6,7 @@ import HasClassname from "../types/HasClassname";
 import HasStyle from "../types/HasStyle";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import { floorToOdd } from "../utils/math";
+import piano from "../utils/Piano";
 
 const WHITE_TILE_WIDTH = 100;
 const WHITE_TILE_HEIGHT = 400;
@@ -20,6 +21,7 @@ type PianoBoardProps = {
     onTilesChange?: (notes: Note[], event: PressedTilesChangeEvent) => void
     // Component display right above the active area of the piano
     hud?: ReactNode
+    mute?: boolean
 } & HasClassname
 
 type PressedTilesState = {
@@ -27,7 +29,7 @@ type PressedTilesState = {
     event: PressedTilesChangeEvent
 }
 
-function PianoBoard({ hud, onTilesChange, className }: PianoBoardProps) {
+function PianoBoard({ hud, onTilesChange, className, mute = false }: PianoBoardProps) {
     const [pressedTilesState, setPressedTilesState] = useState<PressedTilesState>({ notes: [], event: "RELEASED" });
 
     useEffect(() => {
@@ -36,11 +38,14 @@ function PianoBoard({ hud, onTilesChange, className }: PianoBoardProps) {
 
 
     const handleNoteOn = useCallback((note: Note) => {
+        if (!mute) {
+            piano.play(note);
+        }
         setPressedTilesState(({ notes }) => ({
             notes: [...notes, note],
             event: "PRESSED"
         }));
-    }, []);
+    }, [mute]);
 
     const handleNoteOff = useCallback((note: Note) => {
         setPressedTilesState(({ notes }) => ({
