@@ -1,18 +1,14 @@
 import classNames from "classnames";
-import useMidiPiano from "../hooks/useMidiPiano";
+import useMidiPiano from "../../hooks/useMidiPiano";
 import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
-import { Note } from "../models/Note";
-import HasClassname from "../types/HasClassname";
-import HasStyle from "../types/HasStyle";
-import useWindowDimensions from "../hooks/useWindowDimensions";
-import { floorToOdd } from "../utils/math";
-import piano from "../utils/Piano";
+import { Note } from "../../models/Note";
+import HasClassname from "../../types/HasClassname";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
+import { floorToOdd } from "../../utils/math";
+import piano from "../../utils/Piano";
+import { BlackTile, TILE_GAP, WHITE_TILE_WIDTH, WhiteTile } from "./Tile";
 
-const WHITE_TILE_WIDTH = 100;
-const WHITE_TILE_HEIGHT = 400;
-const BLACK_TILE_WIDTH = 50;
-const BLACK_TIME_HEIGHT = 200;
-const TILE_GAP = 16;
+
 const OCTAVE_WIDTH = 7 * WHITE_TILE_WIDTH + 6 * TILE_GAP
 
 export type PressedTilesChangeEvent = "PRESSED" | "RELEASED"
@@ -100,112 +96,6 @@ function PianoBoard({ hud, onTilesChange, className, mute = false }: PianoBoardP
     )
 }
 
-type TileProps = {
-    active?: boolean
-    pressed?: boolean
-    onTilePress?: () => void
-    onTileRelease?: () => void,
-    // Desktop keyboard keys that also trigger this note
-    keys?: string[]
-} & HasStyle & HasClassname
-
-function WhiteTile(props: TileProps) {
-    if (props.active) {
-        return (
-            <Tile
-                {...props}
-                className={classNames("rounded-xl", { "bg-my-blue-100": props.pressed, "bg-white": !props.pressed })}
-                style={{ ...props.style, width: WHITE_TILE_WIDTH, height: WHITE_TILE_HEIGHT }}
-            />
-        )
-    } else {
-        return (
-            <Tile
-                {...props}
-                className={"rounded-xl bg-moonstone-300"} 
-                style={{ ...props.style, width: WHITE_TILE_WIDTH, height: WHITE_TILE_HEIGHT }}
-            />
-        )
-    }
-}
-
-function BlackTile(props: TileProps) {
-    if (props.active) {
-        return (
-            <Tile
-                {...props}
-                style={{ ...props.style, width: BLACK_TILE_WIDTH, height: BLACK_TIME_HEIGHT }}
-                className={classNames("bg-black absolute -top-2 drop-shadow-md", { "bg-my-blue-400": props.pressed })}
-            />
-        )
-    } else {
-        return (
-            <Tile
-                {...props}
-                className={"rounded-xl absolute -top-2 drop-shadow-md bg-moonstone-600"}
-                 style={{ ...props.style, width: BLACK_TILE_WIDTH, height: BLACK_TIME_HEIGHT }}
-            />
-        )
-    }
-}
-
-
-function Tile(props: TileProps) {
-    const [tileDown, setTileDown] = useState(false);
-    useEffect(() => {
-        if (props.active) {
-            const handleKeyDown = (e: KeyboardEvent) => {
-                if (props.keys?.map(k => k.toLowerCase())?.includes(e.key.toLocaleLowerCase())) {
-                    props.onTilePress?.();
-                }
-            }
-            const handleKeyUp = (e: KeyboardEvent) => {
-                if (props.keys?.map(k => k.toLowerCase()).includes(e.key.toLowerCase())) {
-                    props.onTileRelease?.();
-                }
-            }
-    
-            window.addEventListener("keydown", handleKeyDown);
-            window.addEventListener("keyup", handleKeyUp);
-            return () => {
-                window.removeEventListener("keydown", handleKeyDown);
-                window.removeEventListener("keyup", handleKeyUp);
-            }
-        }
-    }, []);
-
-    return (
-        <div
-            className={classNames("rounded-xl", props.className)}
-            style={props.style}
-            onMouseDown={() => {
-                if (props.active) {
-                    setTileDown(true);
-                    props.onTilePress?.();
-                }
-            }}
-            onMouseUp={() => {
-                if (props.active) {
-                    setTileDown(false);
-                    props.onTileRelease?.();
-                }
-            }}
-            onMouseLeave={() => {
-                if (props.active && tileDown) {
-                    setTileDown(false);
-                    props.onTileRelease?.();
-                }
-            }}
-            onMouseEnter={e => {
-                // If primary (left) button down
-                if (props.active && e.buttons === 1 && !tileDown) {
-                    setTileDown(true);
-                    props.onTilePress?.();
-                }
-            }}
-        />
-    )
-}
 
 
 function blackTilePosition(i: number): number {

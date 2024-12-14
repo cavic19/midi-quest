@@ -3,7 +3,7 @@ import { Note } from "./models/Note";
 import HealthBar from "./components/HealthBar";
 import useTimer from "./hooks/useTimer";
 import TimerBar from "./components/TimeBar";
-import PianoBoard, { PressedTilesChangeEvent } from "./components/PianoBoard";
+import PianoBoard, { PressedTilesChangeEvent } from "./components/PianoBoard/PianoBoard";
 import NewGameScreen from "./components/NewGameScreen";
 import GameOverScreen from "./components/GameOverScreen";
 import generateTime from "./generateTime";
