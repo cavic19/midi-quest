@@ -18,7 +18,10 @@ function useLocaStorageGameConfiguration(): [GameConfiguration | undefined, (new
             return new GameConfiguration(
                 chordDefinitions.length !== 0 ? chordDefinitions : GameConfiguration.DEFAULT.chordDefinitions,
                 gameMode === "CHORDS" || gameMode === "NOTES" ? gameMode as GameMode : GameConfiguration.DEFAULT.mode,
-                mutePiano == "true"
+                //Always return true. There is a problem with web audio starting playing on midi input
+                // Before I fix it ist better to force it always to be true. User cna however switch it to false, as it is registered as user input
+                // and web audio starts working
+                true //mutePiano == "true"
             )
         }
     }, [chordDefinitionsKeys, gameMode])
