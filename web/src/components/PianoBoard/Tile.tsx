@@ -83,7 +83,7 @@ export function Tile(props: TileProps) {
                 window.removeEventListener("keyup", handleKeyUp);
             }
         }
-    }, [tileDown]);
+    }, [tileDown, props.onTilePress, props.onTileRelease]);
 
     return (
         <div

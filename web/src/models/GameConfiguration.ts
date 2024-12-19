@@ -12,6 +12,7 @@ class GameConfiguration {
             ChordDefinition.minor,
         ],
         "NOTES",
+        false
     );
 
     static MAX_HEALTH = 10
@@ -21,6 +22,7 @@ class GameConfiguration {
     constructor(
         public chordDefinitions: ChordDefinition[],
         public mode: GameMode,
+        public mutePiano: boolean
     ) {
 
     }

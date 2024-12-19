@@ -7,6 +7,7 @@ import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { floorToOdd } from "../../utils/math";
 import piano from "../../utils/Piano";
 import { BlackTile, TILE_GAP, WHITE_TILE_WIDTH, WhiteTile } from "./Tile";
+import useGameConfiguration from "../../hooks/useGameConfiguration";
 
 
 const OCTAVE_WIDTH = 7 * WHITE_TILE_WIDTH + 6 * TILE_GAP
@@ -17,7 +18,6 @@ type PianoBoardProps = {
     onTilesChange?: (notes: Note[], event: PressedTilesChangeEvent) => void
     // Component display right above the active area of the piano
     hud?: ReactNode
-    mute?: boolean
 } & HasClassname
 
 type PressedTilesState = {
@@ -25,23 +25,23 @@ type PressedTilesState = {
     event: PressedTilesChangeEvent
 }
 
-function PianoBoard({ hud, onTilesChange, className, mute = false }: PianoBoardProps) {
+function PianoBoard({ hud, onTilesChange, className }: PianoBoardProps) {
     const [pressedTilesState, setPressedTilesState] = useState<PressedTilesState>({ notes: [], event: "RELEASED" });
+    const [{mutePiano}] = useGameConfiguration()
 
     useEffect(() => {
         onTilesChange?.(pressedTilesState.notes, pressedTilesState.event)
     }, [pressedTilesState]);
 
-
     const handleNoteOn = useCallback((note: Note) => {
-        if (!mute) {
+        if (!mutePiano) {
             piano.play(note);
         }
         setPressedTilesState(({ notes }) => ({
             notes: [...notes, note],
             event: "PRESSED"
         }));
-    }, [mute]);
+    }, [mutePiano]);
 
     const handleNoteOff = useCallback((note: Note) => {
         setPressedTilesState(({ notes }) => ({
