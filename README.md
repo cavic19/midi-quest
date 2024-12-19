@@ -1,7 +1,16 @@
-# MIDI Quest
-MIDI Quest is a (browser game)[https://midiquest.eu/], where you can improve yoir knowledge of the MIDI keyboard.
+# [MidiQuest.eu](https://midiquest.eu)
+MIDI Quest is a browser game, where users can improve their knowledge of the MIDI keyboard.
 <img width="857" alt="image" src="https://github.com/user-attachments/assets/9b8bc6f3-cefe-43d3-8600-a093fe351c5b">
 
+## Run Locally
+Start the dev server locally
+```
+yarn start
+```
+Build to `/build`
+```
+yarn build
+```
 
 ## TODO:
 - Add leaderboards
