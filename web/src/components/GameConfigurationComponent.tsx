@@ -7,6 +7,7 @@ import useGameConfiguration from '../hooks/useGameConfiguration';
 import { GearSix } from '@phosphor-icons/react/dist/ssr';
 import ChordsSettings from './ChordsSettings';
 import ChordDefinition from '../models/ChordDefinition';
+import IconButton from './IconButton';
 
 
 function GameConfigurationComponent() {
@@ -31,10 +32,11 @@ function GameConfigurationComponent() {
                     <GameModeComp name={"Notes"} svgNode={< SingleNote />} selected={mode === "NOTES"} onClick={() => handleModeChange("NOTES")} />
                     <GameModeComp name={"Chords"} svgNode={< ThreeNotes />} selected={mode === "CHORDS"} onClick={() => handleModeChange("CHORDS")} />
                 </div>
-
-                <div onClick={() => setShowChordsSettings(old => !old)} className={classNames('w-min border border-cyan-600 cursor-pointer p-2 rounded-full', { "bg-my-cyan-600": showChordsSettings })}>
-                    <GearSix size={24} className='text-white' />
-                </div>
+                <IconButton
+                    icon={ <GearSix size={24}/>}
+                    onClick={() => setShowChordsSettings(old => !old)}
+                    active={showChordsSettings}
+                />
             </div>
             {showChordsSettings && <ChordsSettings enabledChordDefinitions={chordDefinitions} onEnabledChordDefinitionsChange={handleChordDefinitionsChange} />}
         </div>
@@ -57,5 +59,6 @@ function GameModeComp({ name, svgNode, selected, onClick }: GameModeCompProps) {
         </div>
     );
 }
+
 
 export default GameConfigurationComponent;
